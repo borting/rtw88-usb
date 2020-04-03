@@ -608,6 +608,7 @@ static int rtw_ops_ampdu_action(struct ieee80211_hw *hw,
 	return 0;
 }
 
+#if (LINUX_VERSION_CODE > KERNEL_VERSION(4, 20, 0))
 static bool rtw_ops_can_aggregate_in_amsdu(struct ieee80211_hw *hw,
 					   struct sk_buff *head,
 					   struct sk_buff *skb)
@@ -621,6 +622,7 @@ static bool rtw_ops_can_aggregate_in_amsdu(struct ieee80211_hw *hw,
 
 	return true;
 }
+#endif
 
 static void rtw_ops_sw_scan_start(struct ieee80211_hw *hw,
 				  struct ieee80211_vif *vif,
@@ -817,7 +819,9 @@ const struct ieee80211_ops rtw_ops = {
 	.sta_remove		= rtw_ops_sta_remove,
 	.set_key		= rtw_ops_set_key,
 	.ampdu_action		= rtw_ops_ampdu_action,
+#if (LINUX_VERSION_CODE > KERNEL_VERSION(4, 20, 0))
 	.can_aggregate_in_amsdu	= rtw_ops_can_aggregate_in_amsdu,
+#endif
 	.sw_scan_start		= rtw_ops_sw_scan_start,
 	.sw_scan_complete	= rtw_ops_sw_scan_complete,
 	.mgd_prepare_tx		= rtw_ops_mgd_prepare_tx,
