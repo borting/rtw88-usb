@@ -1,26 +1,42 @@
 # rtw88-usb
 
-This is based on 
-https://github.com/torvalds/linux/tree/master/drivers/net/wireless/realtek/rtw88
+This driver is forked from [neojou/rtw88-usb](https://github.com/neojou/rtw88-usb), which is based on Realtek's [rtw88 driver](https://github.com/torvalds/linux/tree/master/drivers/net/wireless/realtek/rtw88) in Linux main trunk.
 
-to add support for USB wifi IC - 88x2bu / 88x2cu
+The driver supports Realtek USB wifi IC 88x2bu and 88x2cu, and supports at least managed (i.e. client) and monitor mode.
 
-fw/rtw8822b_fw.bin can be put under /lib/firmware/rtw88/rtw8822b_fw.bin
+## Build
 
-load driver:
-    sudo insmod rtw88.ko
-    sudo insmod rtwusb.ko
-
+```console
+$ make clean
+$ make
+```
+## Installation
+Load driver for test:
+```console
+$ sudo mkdir -p /lib/firmware/rtw88
+$ sudo cp fw/rtw8822* /lib/firmware/rtw88/
+$ sudo insmod rtw88.ko
+$ sudo insmod rtwusb.ko
+```
+Load driver at boot:
+```console
+$ sudo mkdir -p /lib/firmware/rtw88
+$ sudo cp fw/rtw8822* /lib/firmware/rtw88/
+$ sudo mkdir /lib/modules/`uname -r`/kernel/drivers/net/wireless/realtek/rtw88
+$ sudo cp rtw88.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/realtek/rtw88
+$ sudo cp rtwusb.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless/realtek/rtw88
+$ sudo depmod -a
+$ sudo echo -e "rtw88\nrtwusb" > /etc/modules-load.d/rtwusb.conf
+$ sudo systemctl start systemd-modules-load
+```
+## General Commands
 Scan:
-    sudo iw wlanX scan
-
+```console
+$ sudo iw wlanX scan
+```
 Connect to the AP without security:
-    sudo iw wlanX connect <AP name>
-
-dynamic IP:
-    can see IP address obtained by DHCP by using ifconfig
-
-loopback test:
-    cat /sys/kernel/debug/rtw88/usb_loopback_func
-    pktsize: 2000, spend: 54 us, throughput=296Mbps
-
+```console
+$ sudo iw wlanX connect <AP name>
+```
+## Known Issues
+* This driver doesn't support pcie. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel > v5.2.
