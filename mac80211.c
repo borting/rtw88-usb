@@ -2,8 +2,6 @@
 /* Copyright(c) 2018-2019  Realtek Corporation
  */
 
-#include <linux/version.h>
-
 #include "main.h"
 #include "sec.h"
 #include "tx.h"
