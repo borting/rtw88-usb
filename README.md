@@ -31,7 +31,7 @@ $ sudo systemctl start systemd-modules-load
 ```
 
 ## Test Environment
-I have built the driver in the following two environemnt and tested wifi managed and monitor mode using TP-Link Archer T4U (8822bu):
+Have built the driver in the following environemnt and tested managed and monitor mode using TP-Link Archer T4U (8822bu):
 * Ubuntu 16.04.6 (kernel v4.15.0-91)
 * Ubuntu 18.04.4 (kernel v5.3.0-45)
 
