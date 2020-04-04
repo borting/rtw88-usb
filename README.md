@@ -29,7 +29,14 @@ $ sudo depmod -a
 $ sudo echo -e "rtw88\nrtwusb" > /etc/modules-load.d/rtwusb.conf
 $ sudo systemctl start systemd-modules-load
 ```
+
+## Test Environment
+I have built the driver in the following two environemnt and tested wifi managed and monitor mode using TP-Link Archer T4U (8822bu):
+* Ubuntu 16.04.6 (kernel v4.15.0-91)
+* Ubuntu 18.04.4 (kernel v5.3.0-45)
+
 ## General Commands
+
 Scan:
 ```console
 $ sudo iw wlanX scan
@@ -38,5 +45,7 @@ Connect to the AP without security:
 ```console
 $ sudo iw wlanX connect <AP name>
 ```
+
 ## Known Issues
-* This driver doesn't support pcie. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel > v5.2.
+
+* This driver doesn't support pcie. That means, loading this module will cause unpredictable results to other working Realtek wifi pcie device, especially to those laptops with Realtek wifi IC running kernel version > v5.2.
